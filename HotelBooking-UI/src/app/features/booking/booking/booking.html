@@ -1,1 +1,44 @@
-<p>booking works!</p>
+<div class="container">
+
+  <h2>Book Room</h2>
+
+  <form (ngSubmit)="bookRoom()">
+    <input type="number" [(ngModel)]="bookingData.roomId" name="roomId" placeholder="Room ID" required />
+
+    <input type="date" [(ngModel)]="bookingData.checkInDate" name="checkInDate" required />
+
+    <input type="date" [(ngModel)]="bookingData.checkOutDate" name="checkOutDate" required />
+
+    <button type="submit">Book Now</button>
+  </form>
+
+  <hr>
+
+  <h2>My Bookings</h2>
+
+  <table border="1">
+    <tr>
+      <th>Room</th>
+      <th>Hotel</th>
+      <th>Check In</th>
+      <th>Check Out</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tr *ngFor="let b of bookings">
+      <td>{{ b.room.roomNumber }}</td>
+      <td>{{ b.room.hotel.name }}</td>
+      <td>{{ b.checkInDate | date }}</td>
+      <td>{{ b.checkOutDate | date }}</td>
+      <td>{{ b.status }}</td>
+
+      <td>
+        <button *ngIf="b.status === 'Confirmed'" (click)="cancel(b.bookingId)">
+          Cancel
+        </button>
+      </td>
+    </tr>
+  </table>
+
+</div>
