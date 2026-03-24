@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj": {}
+    "C:\\Users\\User\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj": {}
   },
   "projects": {
-    "C:\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj": {
+    "C:\\Users\\User\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj",
         "projectName": "HotelBookingAPi",
-        "projectPath": "C:\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj",
+        "projectPath": "C:\\Users\\User\\Hotel-Booking-System\\HotelBookingAPi\\HotelBookingAPi.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Hotel-Booking-System\\HotelBookingAPi\\obj\\",
+        "outputPath": "C:\\Users\\User\\Hotel-Booking-System\\HotelBookingAPi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
