@@ -1,97 +1,92 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HotelBookingApp.Data;
-using HotelBookingApp.Models;
-using HotelBookingApp.DTOs;
-
-namespace HotelBookingApp.Controllers
+﻿[ApiController]
+[Route("api/[controller]")]
+public class BookingController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BookingController : ControllerBase
+    private readonly AppDbContext _context;
+
+    public BookingController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public BookingController(AppDbContext context)
+    // ✅ CREATE BOOKING
+    [HttpPost]
+    public async Task<IActionResult> CreateBooking(CreateBookingDto dto)
+    {
+        // 🔹 In real app → get from JWT
+        int userId = 1;
+
+        var room = await _context.Rooms.FindAsync(dto.RoomId);
+
+        if (room == null)
+            return NotFound("Room not found");
+
+        // 🔥 CHECK AVAILABILITY (DATE OVERLAP LOGIC)
+        bool isBooked = await _context.Bookings.AnyAsync(b =>
+            b.RoomId == dto.RoomId &&
+            b.Status == "Confirmed" &&
+            dto.CheckInDate < b.CheckOutDate &&
+            dto.CheckOutDate > b.CheckInDate
+        );
+
+        if (isBooked)
+            return BadRequest("Room not available for selected dates");
+
+        // 🔥 CALCULATE PRICE
+        int days = (dto.CheckOutDate - dto.CheckInDate).Days;
+
+        if (days <= 0)
+            return BadRequest("Invalid dates");
+
+        decimal totalAmount = days * room.Price;
+
+        // 🔥 CREATE BOOKING
+        var booking = new Booking
         {
-            _context = context;
-        }
+            UserId = userId,
+            RoomId = dto.RoomId,
+            CheckInDate = dto.CheckInDate,
+            CheckOutDate = dto.CheckOutDate,
+            TotalAmount = totalAmount,
+            Status = "Confirmed"
+        };
 
-        // ✅ CREATE BOOKING
-        [HttpPost]
-        public async Task<IActionResult> CreateBooking(CreateBookingDto dto)
+        _context.Bookings.Add(booking);
+        await _context.SaveChangesAsync();
+
+        return Ok(new
         {
-            // Check availability
-            var isBooked = await _context.Bookings.AnyAsync(b =>
-                b.RoomId == dto.RoomId &&
-                dto.CheckInDate < b.CheckOutDate &&
-                dto.CheckOutDate > b.CheckInDate
-            );
+            message = "Booking Confirmed",
+            bookingId = booking.BookingId
+        });
+    }
 
-            if (isBooked)
-            {
-                return BadRequest("Room not available for selected dates");
-            }
+    // ✅ GET USER BOOKINGS
+    [HttpGet("my/{userId}")]
+    public async Task<IActionResult> GetMyBookings(int userId)
+    {
+        var bookings = await _context.Bookings
+            .Include(b => b.Room)
+            .ThenInclude(r => r.Hotel)
+            .Where(b => b.UserId == userId)
+            .ToListAsync();
 
-            // Get room price
-            var room = await _context.Rooms.FindAsync(dto.RoomId);
+        return Ok(bookings);
+    }
 
-            if (room == null)
-            {
-                return NotFound("Room not found");
-            }
+    // ✅ CANCEL BOOKING
+    [HttpPut("cancel/{id}")]
+    public async Task<IActionResult> CancelBooking(int id)
+    {
+        var booking = await _context.Bookings.FindAsync(id);
 
-            int days = (dto.CheckOutDate - dto.CheckInDate).Days;
-            decimal totalPrice = room.Price * days;
+        if (booking == null)
+            return NotFound("Booking not found");
 
-            // Generate booking number
-            string bookingNumber = "BOOK" + DateTime.Now.Ticks;
+        booking.Status = "Cancelled";
 
-            var booking = new Booking
-            {
-                UserId = dto.UserId,
-                HotelId = dto.HotelId,
-                RoomId = dto.RoomId,
-                CheckInDate = dto.CheckInDate,
-                CheckOutDate = dto.CheckOutDate,
-                Guests = dto.Guests,
-                TotalPrice = totalPrice,
-                BookingNumber = bookingNumber,
-                BookingStatus = "Confirmed"
-            };
+        await _context.SaveChangesAsync();
 
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
-
-            return Ok(booking);
-        }
-
-        // 📜 GET USER BOOKINGS
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserBookings(int userId)
-        {
-            var bookings = await _context.Bookings
-                .Where(b => b.UserId == userId)
-                .ToListAsync();
-
-            return Ok(bookings);
-        }
-
-        // ❌ CANCEL BOOKING
-        [HttpPut("cancel/{id}")]
-        public async Task<IActionResult> CancelBooking(int id)
-        {
-            var booking = await _context.Bookings.FindAsync(id);
-
-            if (booking == null)
-            {
-                return NotFound("Booking not found");
-            }
-
-            booking.BookingStatus = "Cancelled";
-            await _context.SaveChangesAsync();
-
-            return Ok("Booking cancelled successfully");
-        }
+        return Ok("Booking cancelled successfully");
     }
 }
