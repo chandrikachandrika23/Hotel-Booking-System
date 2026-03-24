@@ -1,1 +1,17 @@
-<p>hotel-list works!</p>
+<div class="container">
+
+  <h2>Hotels</h2>
+
+  <div *ngFor="let hotel of hotels" class="card">
+
+    <h3>{{hotel.name}}</h3>
+    <p>{{hotel.location}}</p>
+    <p>{{hotel.amenities}}</p>
+
+    <button class="btn btn-primary">
+      View Rooms
+    </button>
+
+  </div>
+
+</div>
