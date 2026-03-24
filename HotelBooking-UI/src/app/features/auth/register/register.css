@@ -1,0 +1,71 @@
+/* Full page background */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Center container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Form card */
+form {
+  width: 380px;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Inputs & select */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+/* Focus effect */
+input:focus, select:focus {
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 5px rgba(102,126,234,0.5);
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #667eea, #5a67d8);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Hover */
+button:hover {
+  background: linear-gradient(135deg, #5a67d8, #434190);
+}
+
+/* Remove <br> spacing */
+br {
+  display: none;
+}

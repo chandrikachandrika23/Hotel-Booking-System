@@ -1,0 +1,70 @@
+/* Full page center */
+body {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Form container */
+form {
+  width: 350px;
+  margin: 80px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+/* Input focus effect */
+input:focus {
+  border-color: #4facfe;
+  outline: none;
+  box-shadow: 0 0 5px rgba(79,172,254,0.5);
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #4facfe, #00c6ff);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Button hover */
+button:hover {
+  background: linear-gradient(135deg, #3a8dde, #00aaff);
+}
+
+/* Spacing fix */
+br {
+  display: none;
+}

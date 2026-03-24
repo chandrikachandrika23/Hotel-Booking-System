@@ -1,0 +1,50 @@
+<div class="hotels-container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🏨 Browse Hotels</h1>
+    <p>Find and book your perfect stay</p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchLocation"
+      placeholder="Search by location..."
+      class="search-input"
+    />
+    <button (click)="searchHotels()" class="search-btn">Search</button>
+    <button (click)="clearSearch()" class="clear-btn">Clear</button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    <p>Loading hotels...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- No Results -->
+  <div *ngIf="!isLoading && filteredHotels.length === 0" class="no-results">
+    <p>No hotels found.</p>
+  </div>
+
+  <!-- Hotels Grid -->
+  <div class="hotels-grid">
+    <div class="hotel-card" *ngFor="let hotel of filteredHotels">
+      <div class="hotel-info">
+        <h2>{{ hotel.name }}</h2>
+        <p class="location">📍 {{ hotel.location }}</p>
+        <p class="amenities">✨ {{ hotel.amenities }}</p>
+      </div>
+      <div class="hotel-actions">
+        <button class="view-btn">View Rooms</button>
+      </div>
+    </div>
+  </div>
+
+</div>

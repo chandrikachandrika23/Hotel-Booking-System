@@ -1,0 +1,26 @@
+<div class="register-container">
+
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+    <h2>Register</h2>
+
+    <input type="text" placeholder="Name" formControlName="Name">
+    <br><br>
+
+    <input type="email" placeholder="Email" formControlName="Email">
+    <br><br>
+
+    <input type="password" placeholder="Password" formControlName="Password">
+    <br><br>
+
+    <select formControlName="Role">
+      <option value="">Select Role</option>
+      <option value="Admin">Admin</option>
+      <option value="Customer">Customer</option>
+    </select>
+
+    <button type="submit">Register</button>
+
+  </form>
+
+</div>
