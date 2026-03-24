@@ -1,3 +1,4 @@
+
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelBookingAPi.Models
@@ -23,3 +24,5 @@ namespace HotelBookingAPi.Models
         public Room Room { get; set; }
     }
 }
+
+﻿
